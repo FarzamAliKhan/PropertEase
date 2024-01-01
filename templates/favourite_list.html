@@ -1,0 +1,104 @@
+{% extends 'index2.html' %}
+{% load static %}
+
+{% block body %}
+<section class="section property" aria-label="property">
+    <div class="container">
+      <h2 class="h2 section-title">Favourites</h2><br><br>
+
+      <ul class="property-list">
+    {% for p in favourite_posts %}
+        <li>
+          <div class="property-card">
+            <figure
+              class="card-banner img-holder"
+              style="--width: 800; --height: 533"
+            >
+              <img
+                src="{{p.image_1.url}}"
+                width="800"
+                height="533"
+                loading="lazy"
+                class="img-cover"
+              />
+            </figure>
+
+            <div class="card-content">
+              <h3 class="h3">
+                <a href="{{ p.get_absolute_url }}" class="card-title"
+                  >{{ p.title }}</a
+                >
+              </h3>
+
+              <ul class="card-list">
+                <li class="card-item">
+                  <div class="item-icon">
+                    <ion-icon name="cube-outline"></ion-icon>
+                  </div>
+
+                  <span class="item-text">{{p.area_size}}sq yds.</span>
+                </li>
+
+                <li class="card-item">
+                  <div class="item-icon">
+                    <ion-icon name="bed-outline"></ion-icon>
+                  </div>
+
+                  <span class="item-text">{{p.num_bedrooms}} Beds</span>
+                </li>
+
+                <li class="card-item">
+                  <div class="item-icon">
+                    <ion-icon name="man-outline"></ion-icon>
+                  </div>
+
+                  <span class="item-text">{{p.num_bathrooms}} Baths</span>
+                </li>
+
+                <li class="card-item">
+                  <div class="item-icon">
+                    <ion-icon name="home-outline"></ion-icon>
+                  </div>
+
+                  <span class="item-text">For&nbsp{{p.purpose}} </span>
+                </li>
+
+                <li class="card-item">
+                  <div class="item-icon">
+                    <ion-icon name="location-outline"></ion-icon>
+                  </div>
+
+                  <span class="item-text">{{p.location}}&nbsp{{p.city}} </span>
+                </li>
+              </ul>
+
+              <div class="card-meta">
+                <div>
+                  <span class="meta-title">Price</span>
+
+                  <span class="meta-text">PKR&nbsp{{p.price}}</span>
+                </div>
+
+                <div>
+                  <span class="meta-title">Contact</span>      
+                    <span>{{p.mobile_num}}</span>
+                  </span>
+                </div>
+              </div>
+    {% empty %}
+                <div>
+                    No Favourite Posts Found.
+                </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+    {% endfor %}
+
+    </div>
+
+  </section>
+
+    
+{% endblock %}

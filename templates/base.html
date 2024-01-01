@@ -1,0 +1,191 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/696700b9a0.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <title>PropertEase: Real Estate </title>
+    {% block head %}
+      <link href="{% static 'navbar.css' %}" rel="stylesheet"> 
+      <link href="{% static 'styless.css' %}" rel="stylesheet"> 
+    {% endblock %}
+</head>
+<body>
+  {% block body %}
+  
+    <script>
+      let subMenu = document.getElementById("subMenu");
+      function toggleMenu() {
+        subMenu.classList.toggle("open-menu");
+      }
+    </script>
+
+
+    <div class="hero">
+        <nav>
+          <img src="{% static 'images/home.png' %}" width="24px" alt="" />
+          <h1 class="brand">PropertEase</h1>
+          <ul style="list-style: none">
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a href="{% url 'blog' %}">Blog</a></li>
+            <li><a href="#">Contact</a></li>
+            <li>
+              <a href="{% url 'add' %}"><button>List Property</button></a>
+            </li>
+          </ul>
+              {% if request.user.is_authenticated %}
+                <div>
+                  <p style="color: #ffffff;" >{{ request.user }}</p>
+                </div>
+              {% else %}
+                <div>
+                  <span style="color: #ffffff;" >Sign In</span>
+                </div>  
+              {% endif %}
+          <img
+            src="{% static 'images/user.png' %}"
+            class="user-pic"
+            alt=""
+            onclick="toggleMenu()"
+          />
+  
+          <div class="sub-menu-wrap" id="subMenu">
+            <div class="sub-menu">
+              <div class="user-info">
+                {% if request.user.is_authenticated %}
+                <img src="{% static 'images/user.png' %}" alt="" />
+                  <h2>Hello, {{ request.user }}</h2>
+                {% endif %}
+              </div>
+              <br><hr/>
+              {% if request.user.is_anonymous %}
+                <a href="{% url 'login' %}" class="sub-menu-link">
+                  <img src="{% static 'images/user-full.png' %}" alt="" />
+                  <p>Login</p>
+                  <span>></span>
+                </a>
+                <a href="{% url 'register' %}" class="sub-menu-link">
+                  <img src="{% static 'images/setting.png' %}" alt="" />
+                  <p>Register</p>
+                  <span>></span>
+                </a>
+              {% endif %}
+              {% if request.user.is_authenticated %} 
+                <a href="{% url 'favourite_list' %}" class="sub-menu-link">
+                  <img src="{% static 'images/setting.png' %}" alt="" />
+                  <p>My Listings</p>
+                  <span>></span>
+                </a> 
+                <a href="{% url 'favourite_list' %}" class="sub-menu-link">
+                  <img src="{% static 'images/setting.png' %}" alt="" />
+                  <p>Favourites</p>
+                  <span>></span>
+                </a> 
+                  <a href="{% url 'logout' %}" class="sub-menu-link">
+                    <img src="{% static 'images/logout.png' %}" alt="" />
+                    <p>Logout</p>
+                    <span>></span>
+                  </a>
+              {% endif %}
+            </div>
+          </div>
+        </nav>
+    </div>
+
+    
+    <div class="hero-form-wrapper">
+      <div class="form-tab">
+        <button class="tab-btn active" data-tab-btn>Buy</button>
+        <button class="tab-btn" data-tab-btn>Sell</button>
+        <button class="tab-btn" data-tab-btn>Rent</button>
+      </div>
+
+      <form action="" class="hero-form">
+        <div class="input-wrapper">
+          <label for="search" class="input-label">Search : *</label>
+
+          <input
+            type="search"
+            name="search"
+            id="search"
+            placeholder="Search your home"
+            required
+            class="input-field"
+          />
+
+          <ion-icon name="search-outline"></ion-icon>
+        </div>
+
+        <div class="input-wrapper">
+          <label for="category" class="input-label"
+            >Select Categories:</label
+          >
+
+          <select name="category" id="category" class="dropdown-list">
+            <option value="house">House</option>
+            <option value="apartment">Apartment</option>
+            <option value="offices">Offices</option>
+            <option value="townhome">Townhome</option>
+          </select>
+        </div>
+
+        <div class="input-wrapper">
+          <label for="min-price" class="input-label">Min Price :</label>
+
+          <select name="min-price" id="min-price" class="dropdown-list">
+            <option value="min price">Min Price</option>
+            <option value="500">500</option>
+            <option value="1000">1000</option>
+            <option value="2000">2000</option>
+            <option value="3000">3000</option>
+            <option value="4000">4000</option>
+            <option value="5000">5000</option>
+            <option value="6000">6000</option>
+          </select>
+        </div>
+
+        <div class="input-wrapper">
+          <label for="max-price" class="input-label">Max Price :</label>
+
+          <select name="max-price" id="max-price" class="dropdown-list">
+            <option value="max price">Max Price</option>
+            <option value="500">500</option>
+            <option value="1000">1000</option>
+            <option value="2000">2000</option>
+            <option value="3000">3000</option>
+            <option value="4000">4000</option>
+            <option value="5000">5000</option>
+            <option value="6000">6000</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          Search now
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+
+    <h1> Latest Listings</h1>
+    {% for x in listing %}
+    
+        <a href="{% url 'retrieve' x.id %}">{{ x.title }}</a>
+        <span>{{x.property_type}}</span>
+        <span>{{x.mobile_num}}</span>
+        {% if x.image_1 %}
+             <img src="{{x.image_1.url}}" width="300" alt="No More Pictures">
+        {% endif %}
+        {% if x.image_2 %}
+              <img src="{{x.image_2.url}}" width="300" alt="No More Pictures">
+        {% endif %}
+     {% endfor %}
+
+  {% endblock %}
+</body>
+</html>

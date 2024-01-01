@@ -1,0 +1,70 @@
+<script src="https://kit.fontawesome.com/696700b9a0.js" crossorigin="anonymous"></script>
+
+<h1>{{ listing.title }}</h1>
+
+<h1>PKR {{ listing.price}}</h1>
+
+<h1>{{ listing.address }}</h1>
+
+<a href= "{{ listing.map_link }}">View On Google Maps</a>
+<br><br>
+
+<div id = favourite-section>
+    {% if is_favourite %}
+        <a href="{% url 'favourite' id=listing.id %}">
+            <i class="fa-solid fa-heart fa-lg "></i>
+                </a>
+
+    {% else %}
+        <a href="{% url 'favourite' id=listing.id %}">
+            <i class="fa-regular fa-heart fa-lg "></i>
+                </a>
+    {% endif %}    
+</div>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="productcard.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha-384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body style="background-image: url(/image/bg.jpeg); background-attachment: fixed; background-size: cover;">
+    <div class="container">
+        <div class="card" style="background-color: #fff;">
+            <div class="img"></div>
+            <div class="content">
+                <div class="reviewcontainer">
+                    <div class="stars">
+                        <span>Reviews</span>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    </div>
+                </div>
+                <h5 class="price">$1000</h5>
+            </div>
+            <h4 class="name">City</h4>
+            <div class="description">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae aperiam dolores tenetur ducimus minima doloribus incidunt beatae. Dolorem quas, culpa, corporis necessitatibus cumque reiciendis iste voluptatum veritatis qui fugiat alias??</p>
+            </div>
+            <div class="button-container">
+                <div class="like-button">
+                    <i class="fa fa-heart"></i>
+                </div>
+                <div class="card-button">
+                    <p>Purchase</p>
+                    <div class="cart-icon">
+                        <i class="fa fa-shopping-cart"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

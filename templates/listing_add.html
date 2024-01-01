@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+
+  {% block head %}
+  <link href="{% static 'listing.css' %}" rel="stylesheet"> 
+  <link href="{% static 'navbar.css' %}" rel="stylesheet"> 
+  {% endblock %}
+
+  {% block body %}
+  <nav>
+    <img src="{% static 'images/home.png' %}" width="24px" alt="" />
+    <h1 class="brand">PropertEase</h1>
+    <ul style="list-style: none">
+      <li><a href="{% url 'index' %}">Home</a></li>
+      <li><a href="{% url 'blog' %}">Blog</a></li>
+      <li><a href="#">Contact</a></li>
+      
+    </ul>
+        {% if request.user.is_authenticated %}
+          <div>
+            <p style="color: #ffffff;" >{{ request.user }}</p>
+          </div>
+        {% else %}
+          <div>
+            <span style="color: #ffffff;" >Sign In</span>
+          </div>  
+        {% endif %}
+    <img
+      src="{% static 'images/user.png' %}"
+      class="user-pic"
+      alt=""
+      onclick="toggleMenu()"
+    />
+
+    <div class="sub-menu-wrap" id="subMenu">
+      <div class="sub-menu">
+        <div class="user-info">
+          {% if request.user.is_authenticated %}
+          <img src="{% static 'images/user.png' %}" alt="" />
+            <h2>Hello, {{ request.user }}</h2>
+          {% endif %}
+        </div>
+        <br><hr/>
+        {% if request.user.is_anonymous %}
+          <a href="{% url 'login' %}" class="sub-menu-link">
+            <img src="{% static 'images/user-full.png' %}" alt="" />
+            <p>Login</p>
+            <span>></span>
+          </a>
+          <a href="{% url 'register' %}" class="sub-menu-link">
+            <img src="{% static 'images/setting.png' %}" alt="" />
+            <p>Register</p>
+            <span>></span>
+          </a>
+        {% endif %}
+        {% if request.user.is_authenticated %} 
+          <!--<a href="{% url 'favourite_list' %}" class="sub-menu-link">
+            <img src="{% static 'images/setting.png' %}" alt="" />
+            <p>My Listings</p>
+            <span>></span>
+          </a> -->
+          <a href="{% url 'favourite_list' %}" class="sub-menu-link">
+            <img src="{% static 'images/setting.png' %}" alt="" />
+            <p>Favourites</p>
+            <span>></span>
+          </a> 
+            <a href="{% url 'logout' %}" class="sub-menu-link">
+              <img src="{% static 'images/logout.png' %}" alt="" />
+              <p>Logout</p>
+              <span>></span>
+            </a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+    <br>
+    <div class="heading"><h1>Property Listing Form</h1></div>
+    <br>
+    <form id="propertyForm" method="POST" enctype="multipart/form-data" >
+      {% csrf_token %}
+      <div class="content">
+        <label for="propertyTitle">Title:</label>
+        {{ form.title }}
+        <label for="propertyNumber">Plot Number:</label>
+        {{ form.plot_number }}
+        <label for="email">Email:</label>
+        {{ form.email }}
+        <label for="propertyPrice">Price:</label>
+        {{ form.price }}
+        <label for="propertyLocation">Location:</label>
+        {{ form.location }}
+        <label for="propertyDescription">Description:</label>
+        {{ form.description }}
+        <label for="contact">Mobile Number:</label>
+        {{ form.mobile_num }}
+        <label for="propertyType">Property Type:</label>
+        {{ form.property_type }}
+        <label for="propertyType">City:</label>
+        {{ form.city }}
+        <label for="numberOfBedrooms">Bedrooms:</label>
+        {{ form.num_bedrooms }}
+        <label for="propertyBathrooms">Bathrooms:</label>
+        {{ form.num_bathrooms }}
+        <label for="propertySize">Area (in sqft):</label>
+        {{ form.area_size }}
+        <label for="propertyPurpose">Purpose:</label>
+        {{ form.purpose }}
+
+        <label for="propertyImage">Image 1:</label>
+        {{ form.image_1 }}
+
+        <label for="propertyImage">Image 2:</label>
+        {{ form.image_2 }}
+
+        <label for="propertyImage">Image 3:</label>
+        {{ form.image_3 }}
+
+        <label for="propertyImage">Image 4:</label>
+        {{ form.image_4 }}
+
+        <label for="propertyImage">Image 5:</label>
+        {{ form.image_5 }}
+
+        <input type="submit" value="Submit" />
+        
+      </div>
+    </form>
+
+    <script>
+      let subMenu = document.getElementById("subMenu");
+      function toggleMenu() {
+        subMenu.classList.toggle("open-menu");
+      }
+    </script>
+
+
+  {% endblock %}
+

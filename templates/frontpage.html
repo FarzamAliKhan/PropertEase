@@ -1,0 +1,358 @@
+{% load static %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PropertEase - Choose your dream place</title>
+    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link href="{% static 'navbar.css' %}" rel="stylesheet"> 
+    <link href="{% static 'styless.css' %}" rel="stylesheet"> 
+    <script src="{% static 'script.js' %}"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    {% block head %}
+    {% endblock %}
+  </head>
+  <body id="top">
+
+    <div class="hero">
+      <nav>
+        <img src="{% static 'images/home.png' %}" width="24px" alt="" />
+        <h1 class="brand">PropertEase</h1>
+        <ul style="list-style: none">
+          <li><a href="{% url 'index' %}">Home</a></li>
+          <li><a href="{% url 'blog' %}">Blog</a></li>
+          <li><a href="#">Contact</a></li>
+          <li>
+            <a href="{% url 'add' %}"><button class="list">List Property</button></a>
+          </li>
+        </ul>
+            {% if request.user.is_authenticated %}
+              <div>
+                <p style="color: #000000;" >{{ request.user }}</p>
+              </div>
+            {% else %}
+              <div>
+                <span style="color: #000000;" >Sign In</span>
+              </div>  
+            {% endif %}
+        <img
+          src="{% static 'images/user.png' %}"
+          class="user-pic"
+          alt=""
+          onclick="toggleMenu()"
+        />
+
+        <div class="sub-menu-wrap" id="subMenu">
+          <div class="sub-menu">
+            <div class="user-info">
+              {% if request.user.is_authenticated %}
+              <img src="{% static 'images/user.png' %}" alt="" />
+                <h2>Hello, {{ request.user }}</h2>
+              {% endif %}
+            </div>
+            <br><hr/>
+            {% if request.user.is_anonymous %}
+              <a href="{% url 'login' %}" class="sub-menu-link">
+                <img src="{% static 'images/user-full.png' %}" alt="" />
+                <p>Login</p>
+                <span>></span>
+              </a>
+              <a href="{% url 'register' %}" class="sub-menu-link">
+                <img src="{% static 'images/setting.png' %}" alt="" />
+                <p>Register</p>
+                <span>></span>
+              </a>
+            {% endif %}
+            {% if request.user.is_authenticated %} 
+              <a href="{% url 'favourite_list' %}" class="sub-menu-link">
+                <img src="{% static 'images/setting.png' %}" alt="" />
+                <p>Favourites</p>
+                <span>></span>
+              </a> 
+                <a href="{% url 'logout' %}" class="sub-menu-link">
+                  <img src="{% static 'images/logout.png' %}" alt="" />
+                  <p>Logout</p>
+                  <span>></span>
+                </a>
+            {% endif %}
+          </div>
+        </div>
+      </nav>
+    </div>   
+      
+    </header>
+
+    <main>
+      <article class="article">
+      
+
+        <!-- 
+        - #ABOUT
+      -->
+
+
+        <!-- 
+        - #SERVICE
+      -->
+
+    
+        <!-- 
+        - #PROPERTY
+      -->
+      
+
+        <section class="section property" aria-label="property">
+          <div class="container">
+            <h2 class="h2 section-title">Featured Articles</h2><br><br>
+
+            <ul class="property-list">
+              {% for post in posts %}
+              <li>
+                <div class="property-card">
+
+                  <div class="card-content">
+                    <h3 class="h3">
+                      <a href="{% url 'post_detail' post.slug %}" class="card-title"
+                        >{{ post.title }}</a
+                      >
+                    </h3>
+
+                    <ul class="card-list">
+                      <li class="card-item">
+                        <div class="item-icon">
+                          <ion-icon name="cube-outline"></ion-icon>
+                        </div>
+                            <p>{{ post.intro }}</p> 
+                      </li>
+                    
+                    <div class="card-meta">
+                        <div>
+                          <a href="{% url 'post_detail' post.slug %}">Read more</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card-meta">
+                      <div>
+                        <span class="meta-title">Posted at</span>
+
+                        <span class="meta-text">{{ post.date_added }}</span>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+
+          </div>
+
+        </section>
+      
+        <br><br>
+        <section class="newsletter" aria-label="newsletter">
+          <div class="container">
+            <div class="wrapper">
+              <h2 class="h2 section-title">Subscribe to Newsletter!</h2>
+
+              <p class="section-text">
+                Subscribe to get latest updates and information.
+              </p>
+            </div>
+
+            <form action="" class="newsletter-form">
+              <input
+                type="email"
+                name="email_address"
+                placeholder="Enter your email :"
+                aria-label="Enter your email"
+                required
+                class="email-field"
+              />
+
+              <button type="submit" class="btn btn-secondary">Subscribe</button>
+            </form>
+          </div>
+        </section>
+      </article>
+    </main>
+
+
+
+    <!-- 
+    - #FOOTER
+  -->
+
+    <footer class="footer">
+      <div class="footer-top">
+        <div class="container">
+          <div class="footer-brand">
+            <a href="#" class="logo">
+              <img src="{% static 'images/home.png' %}" width="24px" alt="" />
+               PropertEase
+            </a>
+
+            <p class="footer-text">
+              A great platform to buy, sell and rent your properties without
+              any agent or commisions.
+            </p>
+          </div>
+
+          <ul class="footer-list">
+            <li>
+              <p class="footer-list-title">Company</p>
+            </li>
+
+            <li>
+              <a href="{% url 'blog' %}" class="footer-link">
+                <ion-icon name="chevron-forward"></ion-icon>
+
+                <span class="span">Blog</span>
+              </a>
+            </li>
+
+          </ul>
+
+          <ul class="footer-list">
+            <li>
+              <p class="footer-list-title">Useful Links</p>
+            </li>
+
+            <li>
+              <a href="#" class="footer-link">
+                <ion-icon name="chevron-forward"></ion-icon>
+
+                <span class="span">Terms of Services</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="footer-link">
+                <ion-icon name="chevron-forward"></ion-icon>
+
+                <span class="span">Privacy Policy</span>
+              </a>
+            </li>
+           
+          </ul>
+
+          <ul class="footer-list">
+            <li>
+              <p class="footer-list-title">Contact Details</p>
+            </li>
+
+            <li class="footer-item">
+              <ion-icon name="location-outline"></ion-icon>
+
+              <address class="address">
+                Software Dept. NED University,<br />
+                Karachi, Pak, 75400
+              </address>
+            </li>
+
+            <li class="footer-item">
+              <ion-icon name="mail-outline"></ion-icon>
+
+              <a href="mailto:contact@example.com" class="footer-link"
+                >PropertEase@support.com</a
+              >
+            </li>
+
+            <li class="footer-item">
+              <ion-icon name="call-outline"></ion-icon>
+
+              <a href="tel:+152534468854" class="footer-link"
+                >+92 336-806-1047</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="container">
+          <p class="copyright">
+            &copy; 2023 PropertEase. All Right Reserved.
+          </p>
+
+          <ul class="social-list">
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-instagram"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-twitter"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-linkedin"></ion-icon>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    <!-- 
+    - #BACK TO TOP
+  -->
+
+    <a
+      href="#top"
+      class="back-top-btn"
+      aria-label="back to top"
+      data-back-top-btn
+    >
+      <ion-icon name="arrow-up" aria-hidden="true"></ion-icon>
+    </a>
+
+    <!-- 
+    - custom js link
+  -->
+  <script>
+    let subMenu = document.getElementById("subMenu");
+    function toggleMenu() {
+      subMenu.classList.toggle("open-menu");
+    }
+  </script>
+
+    <!-- 
+    - ionicon link
+  -->
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+</html>
+
+
+
+   

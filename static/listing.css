@@ -1,0 +1,104 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
+* {
+    font-family: 'Montserrat', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+}body {
+    font-family: Arial, sans-serif;
+    background-image: url(images/bg.jpeg);
+    background-repeat: repeat;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 20px;
+  }
+
+  h1 {
+    align-items: center;
+    /* top: 0;
+    left: 0;
+    transform: translate(140%, 20%);
+    padding: 15px;
+    width: 400px;
+    background-color: #FFF; */
+    text-align: center;
+    color: #333;
+  }
+  
+  .content {
+    transform: translate(25%, 0%);
+  }
+
+  form {
+    max-width: 1000px;
+    height: max-content;
+    margin: 0 auto;
+    background-color: rgba(123, 177, 116, 0.5);
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  
+  label {
+    text-align: left;
+    display: block;
+    margin-top: 10px;
+    color: #000;
+    font-weight: bold;
+  }
+
+:placeholder-shown {
+    font-weight: bold;
+}
+
+  input {
+    align-items: center;
+    border: 1px solid;
+    box-shadow: #666;
+    box-sizing: border-box;
+    border-radius: 0.5em;
+    width: 500px;
+    height: 5vh;
+  }
+  
+  .input-container {
+    display: flex;
+    margin-bottom: 10px;
+  }
+  
+  .input-container label {
+    flex-basis: 30%;
+  }
+  
+  .input-container input,
+  .input-container textarea {
+    flex-grow: 1;
+    padding: 10px;
+    margin-left: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .input-container input[type="number"] {
+    width: 70px;
+  }
+
+  
+  input[type="submit"] {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  
