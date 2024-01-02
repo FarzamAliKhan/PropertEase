@@ -1,70 +1,520 @@
-<script src="https://kit.fontawesome.com/696700b9a0.js" crossorigin="anonymous"></script>
 
-<h1>{{ listing.title }}</h1>
-
-<h1>PKR {{ listing.price}}</h1>
-
-<h1>{{ listing.address }}</h1>
-
-<a href= "{{ listing.map_link }}">View On Google Maps</a>
-<br><br>
-
-<div id = favourite-section>
-    {% if is_favourite %}
-        <a href="{% url 'favourite' id=listing.id %}">
-            <i class="fa-solid fa-heart fa-lg "></i>
-                </a>
-
-    {% else %}
-        <a href="{% url 'favourite' id=listing.id %}">
-            <i class="fa-regular fa-heart fa-lg "></i>
-                </a>
-    {% endif %}    
-</div>
+{% load static %}
+{% load django_bootstrap5 %}
+{% load widget_tweaks %}
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="productcard.css">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-    integrity="sha-384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous">
-    <title>Document</title>
-</head>
-<body style="background-image: url(/image/bg.jpeg); background-attachment: fixed; background-size: cover;">
-    <div class="container">
-        <div class="card" style="background-color: #fff;">
-            <div class="img"></div>
-            <div class="content">
-                <div class="reviewcontainer">
-                    <div class="stars">
-                        <span>Reviews</span>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    </div>
-                </div>
-                <h5 class="price">$1000</h5>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PropertEase - Choose your dream place</title>
+    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml" />
+    <link href="{% static 'navbar.css' %}" rel="stylesheet"> 
+    <link href="{% static 'styless.css' %}" rel="stylesheet"> 
+    <script src="{% static 'script.js' %}"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+        body {
+            background-image: url('/image/bg.jpeg');
+            background-attachment: fixed;
+            background-size: cover;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            width: 300px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .img {
+            height: 150px;
+            background: url('{{ listing.image_url }}'); /* Replace with your Django model attribute for image URL */
+            background-size: cover;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .reviewcontainer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .stars {
+            color: #f39c12;
+        }
+
+        .price {
+            font-size: 20px;
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+
+        .name {
+            font-size: 18px;
+            color: #2ecc71;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .like-button, .card-button {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            color: #555;
+        }
+
+        .card-button p {
+            margin: 0;
+            margin-left: 5px;
+        }
+
+        .like-button i, .card-button i {
+            font-size: 20px;
+            margin-right: 5px;
+        }
+
+        .cart-icon {
+            color: #e74c3c;
+        }
+    </style>
+    {% block head %}
+    {% endblock %}
+  </head>
+  <body id="top">
+
+    <div class="hero" style="background-color: white;">
+      <nav>
+        <img src="{% static 'images/home.png' %}" width="24px" alt="" />
+        <h1 class="brand">PropertEase</h1>
+        <ul style="list-style: none">
+          <li><a href="{% url 'index' %}">Home</a></li>
+          <li><a href="{% url 'blog' %}">Blog</a></li>
+          <li><a href="#">About</a></li>
+          <li class="btn btn-primary btn-lg" style="background-color: green; ">
+            <a href="{% url 'add' %}"><button class="list" >List Property</button></a>
+          </li>
+        </ul>
+            {% if request.user.is_authenticated %}
+              <div>
+                <p style="color: #000000;" >{{ request.user }}</p>
+              </div>
+            {% else %}
+              <div>
+                <span style="color: #000000;" >Sign In</span>
+              </div>  
+            {% endif %}
+        <img
+          src="{% static 'images/user.png' %}"
+          class="user-pic"
+          alt=""
+          onclick="toggleMenu()"
+        />
+
+        <div class="sub-menu-wrap" id="subMenu">
+          <div class="sub-menu">
+            <div class="user-info">
+              {% if request.user.is_authenticated %}
+              <img src="{% static 'images/user.png' %}" alt="" />
+                <h2>Hello, {{ request.user }}</h2>
+              {% endif %}
             </div>
-            <h4 class="name">City</h4>
-            <div class="description">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae aperiam dolores tenetur ducimus minima doloribus incidunt beatae. Dolorem quas, culpa, corporis necessitatibus cumque reiciendis iste voluptatum veritatis qui fugiat alias??</p>
-            </div>
-            <div class="button-container">
-                <div class="like-button">
-                    <i class="fa fa-heart"></i>
-                </div>
-                <div class="card-button">
-                    <p>Purchase</p>
-                    <div class="cart-icon">
-                        <i class="fa fa-shopping-cart"></i>
-                    </div>
-                </div>
-            </div>
+            <br><hr/>
+            {% if request.user.is_anonymous %}
+              <a href="{% url 'login' %}" class="sub-menu-link">
+                <img src="{% static 'images/user-full.png' %}" alt="" />
+                <p>Login</p>
+                <span>></span>
+              </a>
+              <a href="{% url 'register' %}" class="sub-menu-link">
+                <img src="{% static 'images/setting.png' %}" alt="" />
+                <p>Register</p>
+                <span>></span>
+              </a>
+            {% endif %}
+            {% if request.user.is_authenticated %} 
+              <a href="{% url 'favourite_list' %}" class="sub-menu-link">
+                <img src="{% static 'images/setting.png' %}" alt="" />
+                <p>Favourites</p>
+                <span>></span>
+              </a> 
+                <a href="{% url 'logout' %}" class="sub-menu-link">
+                  <img src="{% static 'images/logout.png' %}" alt="" />
+                  <p>Logout</p>
+                  <span>></span>
+                </a>
+            {% endif %}
+          </div>
         </div>
+      </nav>
     </div>
-</body>
+    {% block body %}
+   
+
+    <main>
+      <article class="article">
+        <section class="section hero" aria-label="hero">
+          <div class="container">
+            <div class="hero-bg" style="background-image: none;">
+              <div class="hero-content" style="background-color: white;">
+ 
+                      
+                   
+                    <div class="container">
+                        <div class="card" style="width: 100%";>
+                            <div class="img"><img
+                                src="{{listing.image_1.url}}"
+                                width="800"
+                                height="533"
+                                loading="lazy"
+                                class="img-cover"
+                              />
+                            </div>
+                            <div class="content">
+                                <div class="reviewcontainer">
+                                    <div class="stars">
+                                        <span>Reviews</span>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                </div>
+                                <h1>{{ listing.title }}</h1>
+                                <h1>PKR {{ listing.price }}</h1>
+                                <h1>{{ listing.address }}</h1>
+                                <a href="{{ listing.map_link }}">View On Google Maps</a>
+                                <br><br>
+                                <div id="favourite-section">
+                                    {% if is_favourite %}
+                                        <a href="{% url 'favourite' id=listing.id %}">
+                                            <i class="fa-solid fa-heart fa-lg "></i>
+                                        </a>
+                                    {% else %}
+                                        <a href="{% url 'favourite' id=listing.id %}">
+                                            <i class="fa-regular fa-heart fa-lg "></i>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                                <h5 class="price">${{ listing.price }}</h5>
+                                <h4 class="name">{{ listing.city }}</h4>
+                                <div class="description">
+                                    <p>{{ listing.description }}</p>
+                                </div>
+                                <a href="{{ listing.map_link }}">View On Google Maps</a>
+
+                                <div class="button-container">
+                                    <div class="like-button">
+                                        <i class="fa fa-heart"></i>
+                                        Add to Favorites
+                                    </div>
+                                    <div class="card-button">
+                                        <p>Purchase</p>
+                                        <div class="cart-icon">
+                                            <i class="fa fa-shopping-cart"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+               
+            </div>
+          </div>
+        </section>
+<!--
+        <section class="section property" aria-label="property">
+          <div class="container">
+            <h2 class="h2 section-title">Featured Properties</h2><br><br>
+
+            <ul class="property-list">
+              
+              <li>
+                <div class="property-card" >
+                  <figure
+                    class="card-banner img-holder"
+                    style="--width: 800; --height: 533"
+                  >
+                    <img
+                      src="{{x.image_1.url}}"
+                      width="800"
+                      height="533"
+                      loading="lazy"
+                      class="img-cover"
+                    />
+                  </figure>
+
+                  <div class="card-content">
+                    <h3 class="h3">  
+                      <a href="" class="card-title"
+                        >{{ x.title }}
+                      </a>
+                    </h3>
+
+                    <ul class="card-list">
+                      <li class="card-item">
+                        <div class="item-icon">
+                          <ion-icon name="cube-outline"></ion-icon>
+                        </div>
+
+                        <span class="item-text">{{x.area_size}}sq yds.</span>
+                      </li>
+
+                      <li class="card-item">
+                        <div class="item-icon">
+                          <ion-icon name="bed-outline"></ion-icon>
+                        </div>
+
+                        <span class="item-text">{{x.num_bedrooms}} Beds</span>
+                      </li>
+
+                      <li class="card-item">
+                        <div class="item-icon">
+                          <ion-icon name="man-outline"></ion-icon>
+                        </div>
+
+                        <span class="item-text">{{x.num_bathrooms}} Baths</span>
+                      </li>
+
+                      <li class="card-item">
+                        <div class="item-icon">
+                          <ion-icon name="home-outline"></ion-icon>
+                        </div>
+
+                        <span class="item-text">For&nbsp{{x.purpose}} </span>
+                      </li>
+
+                      <li class="card-item">
+                        <div class="item-icon">
+                          <ion-icon name="location-outline"></ion-icon>
+                        </div>
+
+                        <span class="item-text">{{x.location}}&nbsp{{x.city}} </span>
+                      </li>
+                    </ul>
+
+                    <div class="card-meta">
+                      <div>
+                        <span class="meta-title">Price</span>
+
+                        <span class="meta-text">PKR&nbsp{{x.price}}</span>
+                      </div>
+
+                      <div>
+                        <span class="meta-title">Contact</span>      
+                          <span>{{x.mobile_num}}</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+
+          </div>
+
+        </section>
+      -->
+        <br><br>
+    
+      </article>
+    </main>
+
+
+
+    {% endblock %}
+    <!-- 
+    - #FOOTER
+  -->
+
+    <footer class="footer">
+      <div class="footer-top">
+        <div class="container">
+          <div class="footer-brand">
+            <a href="#" class="logo">
+              <img src="{% static 'images/home.png' %}" width="24px" alt="" />
+               PropertEase
+            </a>
+
+            <p class="footer-text">
+              A great platform to buy, sell and rent your properties without
+              any agent or commisions.
+            </p>
+          </div>
+
+          <ul class="footer-list">
+            <li>
+              <p class="footer-list-title">Company</p>
+            </li>
+
+            <li>
+              <a href="{% url 'blog' %}" class="footer-link">
+                <ion-icon name="chevron-forward"></ion-icon>
+
+                <span class="span">Blog</span>
+              </a>
+            </li>
+
+          </ul>
+
+          <ul class="footer-list">
+            <li>
+              <p class="footer-list-title">Useful Links</p>
+            </li>
+
+            <li>
+              <a href="#" class="footer-link">
+                <ion-icon name="chevron-forward"></ion-icon>
+
+                <span class="span">Terms of Services</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="footer-link">
+                <ion-icon name="chevron-forward"></ion-icon>
+
+                <span class="span">Privacy Policy</span>
+              </a>
+            </li>
+           
+          </ul>
+
+          <ul class="footer-list">
+            <li>
+              <p class="footer-list-title">Contact Details</p>
+            </li>
+
+            <li class="footer-item">
+              <ion-icon name="location-outline"></ion-icon>
+
+              <address class="address">
+                Software Dept. NED University,<br />
+                Karachi, Pak, 75400
+              </address>
+            </li>
+
+            <li class="footer-item">
+              <ion-icon name="mail-outline"></ion-icon>
+
+              <a href="mailto:contact@example.com" class="footer-link"
+                >PropertEase@support.com</a
+              >
+            </li>
+
+            <li class="footer-item">
+              <ion-icon name="call-outline"></ion-icon>
+
+              <a href="tel:+152534468854" class="footer-link"
+                >+92 336-806-1047</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="container">
+          <p class="copyright">
+            &copy; 2023 PropertEase. All Right Reserved.
+          </p>
+
+          <ul class="social-list">
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-instagram"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-twitter"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-linkedin"></ion-icon>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    <!-- 
+    - #BACK TO TOP
+  -->
+
+    <a
+      href="#top"
+      class="back-top-btn"
+      aria-label="back to top"
+      data-back-top-btn
+    >
+      <ion-icon name="arrow-up" aria-hidden="true"></ion-icon>
+    </a>
+
+    <!-- 
+    - custom js link
+  -->
+  <script>
+    let subMenu = document.getElementById("subMenu");
+    function toggleMenu() {
+      subMenu.classList.toggle("open-menu");
+    }
+  </script>
+
+    <!-- 
+    - ionicon link
+  -->
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+    <script src="https://kit.fontawesome.com/696700b9a0.js" crossorigin="anonymous"></script>
+
 </html>

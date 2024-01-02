@@ -172,20 +172,10 @@
 
 
 
-    <h1> Latest Listings</h1>
-    {% for x in listing %}
-    
-        <a href="{% url 'retrieve' x.id %}">{{ x.title }}</a>
-        <span>{{x.property_type}}</span>
-        <span>{{x.mobile_num}}</span>
-        {% if x.image_1 %}
-             <img src="{{x.image_1.url}}" width="300" alt="No More Pictures">
-        {% endif %}
-        {% if x.image_2 %}
-              <img src="{{x.image_2.url}}" width="300" alt="No More Pictures">
-        {% endif %}
-     {% endfor %}
+   
 
   {% endblock %}
+  
 </body>
+
 </html>
