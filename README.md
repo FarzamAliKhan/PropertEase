@@ -15,6 +15,8 @@ python manage.py migrate
 //finally
 python manage.py runserver //run website
 
+python manage.py createsuperuser //create ur own admin account to manage functionalites and listings additions etc 
+
 
 //NOTE: 
 ListingPage is incomplete will push changes later. I have it.
