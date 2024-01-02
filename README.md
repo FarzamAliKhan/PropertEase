@@ -15,3 +15,7 @@ python manage.py migrate
 //finally
 python manage.py runserver //run website
 
+
+//NOTE: 
+ListingPage is incomplete will push changes later. I have it.
+Adding properties doesnt work for some reason, to add listings do it from django-admin.
