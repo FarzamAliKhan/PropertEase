@@ -1,6 +1,6 @@
 <h1 align="center">Welcome to PropertEase 👋 - Mock Django Real Estate Platform with CRUD (MYSQL) </h1>
-> Focused on Backend 🙂
 
+> Focused on Backend 🙂
 > Leave a star 🌟 if you find it useful 🙂
 
 ## Technologies Used 💻
@@ -9,8 +9,6 @@
 - MySQL
 
 ## Usage 🚀
-
-> Make sure you are using Dart < 3 (future upgrade to dart 3.0)
 
 1. Clone the repository:
 
@@ -62,7 +60,7 @@
    python manage.py createsuperuser 
    ```
 
-###NOTE: 
+### NOTE: 
  > ListingPage is incomplete will push changes later. I have it.
  > Adding properties doesnt work for some reason, to add listings do it from django-admin from /admin.
 
