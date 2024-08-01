@@ -42,7 +42,10 @@
     
 4. Connect your preferred database:
 
-   > Kindly check online MySQL/PostGres Django connection (small configuration added in ```bash settings.py```)
+   > Kindly check online MySQL/PostGres Django connection, small configuration added in
+   ```bash
+   settings.py
+   ```
    
    > After adding database connection string, migrate database
    ```bash
