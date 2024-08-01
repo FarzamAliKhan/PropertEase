@@ -13,7 +13,7 @@
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/FarzamAliKhan/Hazri.git
+   git clone https://github.com/FarzamAliKhan/PropertEase.git
    ```
 
 2. Activate Python Virualenv:
